@@ -1,31 +1,30 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Change Text Content Dynamically
-    function changeText() {
-        const dynamicTextElement = document.getElementById('dynamicText');
-        dynamicTextElement.textContent = 'Text changed by JavaScript!';
-    }
-    changeText();
+const button = document.getElementById('myButton');
+const dynamicText = document.getElementById('dynamicText');
+const mySpan = document.getElementById('mySpan');
+const container = document.getElementById('container');
 
-    // 2. Modify CSS Styles
-    function changeStyles() {
-        const containerElement = document.getElementById('container');
-        containerElement.style.backgroundColor = 'lightblue';
-        containerElement.style.padding = '20px';
-    }
-    changeStyles();
+let isAdding = true;
 
-    // 3. Add/Remove Element on Button Click
-    const myButton = document.getElementById('myButton');
-    myButton.addEventListener('click', function() {
+button.addEventListener('click', function() {
+    // Change text content
+    dynamicText.textContent = 'Text Updated!';
+
+    // Toggle CSS styles
+    mySpan.classList.toggle('highlight');
+
+    // Add or remove element
+    if (isAdding) {
         const newElement = document.createElement('p');
-        newElement.textContent = 'This element was added dynamically!';
-        const containerElement = document.getElementById('container');
-
-        if (containerElement.contains(document.getElementById('dynamicElement'))) {
-            containerElement.removeChild(document.getElementById('dynamicElement'));
-        } else {
-            newElement.id = 'dynamicElement';
-            containerElement.appendChild(newElement);
+        newElement.textContent = 'New Element Added!';
+        newElement.classList.add('added-element');
+        container.appendChild(newElement);
+        button.textContent = 'Remove Last Element';
+    } else {
+        const lastAdded = container.querySelector('.added-element:last-of-type');
+        if (lastAdded) {
+            container.removeChild(lastAdded);
         }
-    });
+        button.textContent = 'Add New Element';
+    }
+    isAdding = !isAdding;
 });
